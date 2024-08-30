@@ -31,7 +31,6 @@
 
 #include <Python.h>
 
-#include <stdlib.h>
 #include <lz4.h>
 #include <lz4hc.h>
 
@@ -112,6 +111,10 @@ PyInit__version(void)
 
   if (module == NULL)
     return NULL;
+
+#ifdef Py_GIL_DISABLED
+  PyUnstable_Module_SetGIL(module, Py_MOD_GIL_NOT_USED);
+#endif
 
   return module;
 }
